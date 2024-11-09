@@ -19,7 +19,7 @@
 		"db:migrate": "wrangler d1 migrations apply eats-wishlist-dev --local && drizzle-kit migrate",
 		"db:studio": "drizzle-kit studio",
 		"db:seed:local": "curl http://localhost:5173/api/seed",
-		"deploy:db": "d1 migrations apply eats-wishlist-prod --remote",
+		"deploy:db": "wrangler d1 migrations apply eats-wishlist-dev --remote",
 		"deploy:pages": "pnpm run build && wrangler pages deploy",
 		"cf-typegen": "wrangler types && mv worker-configuration.d.ts src/"
 	},
