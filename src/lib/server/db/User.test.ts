@@ -1,7 +1,9 @@
 import { drizzle } from 'drizzle-orm/d1';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { DbClient } from '../connection';
+import type { DbClient } from './connection';
 import { User } from './User';
+
+type MockUser = Partial<Awaited<ReturnType<typeof user.createUser>>>;
 
 vi.mock('drizzle-orm/d1', () => ({
 	drizzle: vi.fn()
@@ -9,9 +11,10 @@ vi.mock('drizzle-orm/d1', () => ({
 
 const mockDbClient = vi.mocked(drizzle) as unknown as DbClient;
 
-const mockUser: Awaited<ReturnType<typeof user.createUser>> = {
+const mockUser: MockUser = {
 	id: 'mock-user-id',
-	email: 'mock-user-email@test.com'
+	email: 'mock-user-email@test.com',
+	name: 'mock-user-name'
 };
 const mockPassword = 'moc5-p@ssWord';
 
@@ -30,7 +33,7 @@ describe('User', () => {
 				})
 			});
 
-			const [results] = await user.getByEmail(mockUser.email);
+			const [results] = await user.getByEmail(mockUser.email!);
 			expect(results).toEqual(mockUser);
 		});
 	});
@@ -69,7 +72,11 @@ describe('User', () => {
 				})
 			});
 
-			const result = await user.createUser(mockUser.email, mockPassword);
+			const result = await user.createUser({
+				email: mockUser.email!,
+				password: mockPassword,
+				name: mockUser.name!
+			});
 			expect(result).toEqual(mockUser);
 		});
 	});

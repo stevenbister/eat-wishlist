@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "47be80f1-1bbc-4bc9-95ef-84ff6a8aa767",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "b5131f37-2454-43b6-8f7d-a32b0289466f",
+  "prevId": "47be80f1-1bbc-4bc9-95ef-84ff6a8aa767",
   "tables": {
     "session": {
       "name": "session",
@@ -82,6 +82,70 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "user_friend": {
+      "name": "user_friend",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "user_id_1": {
+          "name": "user_id_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "user_id_2": {
+          "name": "user_id_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_friend_user_id_1_user_id_fk": {
+          "name": "user_friend_user_id_1_user_id_fk",
+          "tableFrom": "user_friend",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id_1"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "user_friend_user_id_2_user_id_fk": {
+          "name": "user_friend_user_id_2_user_id_fk",
+          "tableFrom": "user_friend",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id_2"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }

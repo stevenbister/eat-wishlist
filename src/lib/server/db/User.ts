@@ -2,8 +2,8 @@ import { encodeBase32LowerCase } from '@oslojs/encoding';
 import { error } from '@sveltejs/kit';
 import bycrypt from 'bcrypt-edge';
 import { eq } from 'drizzle-orm';
-import type { DbClient } from '../connection';
-import { user } from '../schema/user';
+import type { DbClient } from './connection';
+import { user } from './schema/user';
 import { TableCommon } from './TableCommon';
 
 export class User extends TableCommon<typeof user> {
@@ -23,20 +23,21 @@ export class User extends TableCommon<typeof user> {
 		return bycrypt.compareSync(password, hash);
 	}
 
-	async createUser(email: string, password: string) {
+	async createUser({ email, password, name }: { email: string; password: string; name: string }) {
 		const passwordHash = this.hashPassword(password);
 		const userId = this.generateId();
 
-		const [{ id, email: userEmail }] = await this.db
+		const [{ id, email: userEmail, name: userName }] = await this.db
 			.insert(this.schema)
-			.values({ id: userId, email, password: passwordHash })
+			.values({ id: userId, email, password: passwordHash, name })
 			.returning();
 
 		if (!id) error(500, 'User could not be created');
 
 		return {
 			id,
-			email: userEmail
+			email: userEmail,
+			name: userName
 		};
 	}
 
@@ -46,6 +47,10 @@ export class User extends TableCommon<typeof user> {
 		const id = encodeBase32LowerCase(bytes);
 
 		return id;
+	}
+
+	validateName(name: unknown): name is string {
+		return typeof name !== 'string';
 	}
 
 	validateEmail(email: unknown): email is string {

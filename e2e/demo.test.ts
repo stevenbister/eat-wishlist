@@ -5,7 +5,7 @@ test.describe('logged in', () => {
 		await page.goto('/');
 		await expect(
 			page.getByRole('heading', {
-				name: 'Welcome test@test.com, to SvelteKit'
+				name: 'Welcome steven@test.com, to SvelteKit'
 			})
 		).toBeVisible();
 	});

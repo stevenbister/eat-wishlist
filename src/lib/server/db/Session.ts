@@ -4,11 +4,11 @@ import { sha256 } from '@oslojs/crypto/sha2';
 import { encodeBase32LowerCaseNoPadding, encodeHexLowerCase } from '@oslojs/encoding';
 import type { RequestEvent } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
-import type { DbClient } from '../connection';
-import type { Session as SessionTable } from '../schema/session';
-import { session as sessionTable } from '../schema/session';
-import type { User as UserTable } from '../schema/user';
-import { user as userTable } from '../schema/user';
+import type { DbClient } from './connection';
+import type { Session as SessionTable } from './schema/session';
+import { session as sessionTable } from './schema/session';
+import type { User as UserTable } from './schema/user';
+import { user as userTable } from './schema/user';
 import { TableCommon } from './TableCommon';
 
 export type SessionValidationResult =

@@ -1,7 +1,7 @@
 import type { SQL, TableConfig } from 'drizzle-orm';
 import { eq } from 'drizzle-orm';
 import type { SQLiteColumn, SQLiteTable } from 'drizzle-orm/sqlite-core';
-import type { DbClient } from '../connection';
+import type { DbClient } from './connection';
 
 export type SelectOptions = { limit?: number; orderBy?: (SQLiteColumn | SQL)[] };
 export type Table = SQLiteTable<TableConfig>;

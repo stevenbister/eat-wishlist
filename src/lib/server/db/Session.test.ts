@@ -5,7 +5,7 @@ import { encodeHexLowerCase } from '@oslojs/encoding';
 import type { RequestEvent } from '@sveltejs/kit';
 import { drizzle } from 'drizzle-orm/d1';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { DbClient } from '../connection';
+import type { DbClient } from './connection';
 import type { SessionValidationResult } from './Session';
 import { Session } from './Session';
 
@@ -41,6 +41,7 @@ const mockSessionId = 'mock-session-id';
 const mockToken = 'mock-token';
 const mockUserId = 'mock-user-id';
 const mockUserEmail = 'mock-user-email@test.com';
+const mockUserName = 'mock-user-name';
 
 const mockCreateQuery = (sessionId: string, userId: string, expiresAt: Date) => {
 	const mock = (mockDbClient.insert = vi.fn().mockReturnValue({
@@ -123,7 +124,7 @@ describe('Session', () => {
 			mockValidationQuery([
 				{
 					session: { id: mockSessionId, userId: mockUserId, expiresAt: pastDate },
-					user: { id: mockUserId, email: mockUserEmail }
+					user: { id: mockUserId, email: mockUserEmail, name: mockUserName }
 				}
 			]);
 
@@ -146,7 +147,7 @@ describe('Session', () => {
 
 			const sessionWithUser = {
 				session: { id: mockSessionId, userId: mockUserId, expiresAt: futureDate },
-				user: { id: mockUserId, email: mockUserEmail }
+				user: { id: mockUserId, email: mockUserEmail, name: mockUserName }
 			};
 
 			mockValidationQuery([sessionWithUser]);
@@ -163,7 +164,7 @@ describe('Session', () => {
 
 			const sessionWithUser = {
 				session: { id: mockSessionId, userId: mockUserId, expiresAt: nearExpiringDate },
-				user: { id: mockUserId, email: mockUserEmail }
+				user: { id: mockUserId, email: mockUserEmail, name: mockUserName }
 			};
 
 			// Mock db returning a session that is near expiration

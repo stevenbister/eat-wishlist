@@ -1,6 +1,6 @@
 import { VALIDATION_MESSAGE } from '$lib/constants/auth';
-import { Session } from '$lib/server/db/objects/Session';
-import { User } from '$lib/server/db/objects/User';
+import { Session } from '$lib/server/db/Session';
+import { User } from '$lib/server/db/User';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 
 export const actions: Actions = {
@@ -42,11 +42,13 @@ export const actions: Actions = {
 		const session = new Session(db);
 
 		const formData = await event.request.formData();
-		const email = formData.get('email');
-		const password = formData.get('password');
+		const name = formData.get('name');
+		if (!user.validateName(name)) return fail(400, { message: VALIDATION_MESSAGE.GENERIC });
 
+		const email = formData.get('email');
 		if (!user.validateEmail(email)) return fail(400, { message: VALIDATION_MESSAGE.INVALID_EMAIL });
 
+		const password = formData.get('password');
 		if (!user.validatePassword(password))
 			return fail(400, {
 				message: VALIDATION_MESSAGE.INVALID_PASSWORD
@@ -58,7 +60,7 @@ export const actions: Actions = {
 		if (existingUser) return fail(400, { message: VALIDATION_MESSAGE.USER_ALREADY_EXISTS });
 
 		try {
-			const newUser = await user.createUser(email, password);
+			const newUser = await user.createUser({ name, email, password });
 
 			const sessionToken = session.generateToken();
 			const newSession = await session.create(sessionToken, newUser.id);
