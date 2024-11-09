@@ -1,0 +1,65 @@
+name: e2e
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  build:
+    name: 🏗️ Wait for CF build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    outputs:
+      ENV: ${{ steps.cf-pages.outputs.environment }}
+      ALIAS: ${{ steps.cf-pages.outputs.alias }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: 🚏 Await CF Pages
+        id: cf-pages
+        uses: WalshyDev/cf-pages-await@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_PAGES_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          project: 'cf-sveltekit-drizzle-starter'
+          githubToken: ${{ secrets.GH_TOKEN }}
+          commitHash: ${{ steps.push-changes.outputs.commit-hash }}
+
+      - name: 🕵️ Check
+        shell: bash
+        env:
+          ENV: ${{ steps.cf-pages.outputs.environment }}
+          ALIAS: ${{ steps.cf-pages.outputs.alias }}
+        run: |
+          echo SETTING VALUES TO OUTPUT
+          echo "The environment is: ${ENV}"
+          echo "env=${ENV}" >> $GITHUB_OUTPUT
+          echo "The alias is: ${ALIAS}"
+          echo "alias=${ALIAS}" >> $GITHUB_OUTPUT
+
+  playwright:
+    name: 🎭 Playwright
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install Playwright Browsers
+        run: pnpx playwright install --with-deps
+      - name: Run Playwright tests
+        env:
+          PLAYWRIGHT_TEST_BASE_URL: ${{ needs.build.outputs.alias }}
+        run: pnpm test:e2e
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
