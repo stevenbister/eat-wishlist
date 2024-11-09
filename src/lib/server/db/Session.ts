@@ -51,7 +51,8 @@ export class Session extends TableCommon<typeof sessionTable> {
 			.select({
 				user: {
 					id: userTable.id,
-					email: userTable.email
+					email: userTable.email,
+					name: userTable.name
 				},
 				session: this.schema
 			})
