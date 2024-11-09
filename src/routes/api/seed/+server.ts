@@ -74,6 +74,7 @@ export const GET: RequestHandler = async ({ platform, locals }) => {
 		{
 			name: 'Burger King',
 			notes: 'Burgers are delicious',
+			website: 'https://www.burgerking.com',
 			visited: true,
 			createdBy: userList[0].id,
 			listId: newList.id
@@ -81,6 +82,7 @@ export const GET: RequestHandler = async ({ platform, locals }) => {
 		{
 			name: 'McDonalds',
 			notes: 'Burgers are delicious',
+			website: 'https://www.mcdonalds.com',
 			createdBy: userList[0].id,
 			listId: newList.id
 		}
