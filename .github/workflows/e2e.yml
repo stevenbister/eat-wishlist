@@ -22,7 +22,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_PAGES_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          project: 'cf-sveltekit-drizzle-starter'
+          project: 'eats-wishlist'
           githubToken: ${{ secrets.GH_TOKEN }}
           commitHash: ${{ steps.push-changes.outputs.commit-hash }}
 
