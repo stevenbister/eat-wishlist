@@ -15,7 +15,7 @@ declare global {
 		}
 
 		interface Locals {
-			user: import('$lib/server/db/Session').SessionValidationResult['user'];
+			user: import('$lib/server/db/User').SessionValidationResult['user'];
 			session: import('$lib/server/db/Session').SessionValidationResult['session'];
 			db: import('$lib/server/db/connection').DbClient;
 		}

@@ -49,6 +49,10 @@ export class User extends TableCommon<typeof user> {
 		return id;
 	}
 
+	validateName(name: unknown): name is string {
+		return typeof name !== 'string';
+	}
+
 	validateEmail(email: unknown): email is string {
 		if (typeof email !== 'string') return false;
 
