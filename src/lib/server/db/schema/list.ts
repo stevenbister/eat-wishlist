@@ -1,4 +1,3 @@
-import { sql } from 'drizzle-orm/sql';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { user } from './user';
 
@@ -10,7 +9,7 @@ export const list = sqliteTable('list', {
 	description: text('description'),
 	createdAt: integer('created_at', { mode: 'timestamp' })
 		.notNull()
-		.default(sql`CURRENT_TIMESTAMP`),
+		.$default(() => new Date()),
 	createdBy: text('created_by')
 		.notNull()
 		.references(() => user.id, { onDelete: 'cascade' })

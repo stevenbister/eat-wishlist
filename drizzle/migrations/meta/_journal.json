@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1731158106348,
-      "tag": "0000_zippy_expediter",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1731163291382,
-      "tag": "0001_confused_justin_hammer",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1731164695479,
-      "tag": "0002_grey_vengeance",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1731180500344,
-      "tag": "0003_kind_scourge",
+      "when": 1731181304706,
+      "tag": "0000_flat_magma",
       "breakpoints": true
     }
   ]
