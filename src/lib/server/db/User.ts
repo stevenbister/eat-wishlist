@@ -23,13 +23,13 @@ export class User extends TableCommon<typeof user> {
 		return bycrypt.compareSync(password, hash);
 	}
 
-	async createUser(email: string, password: string) {
+	async createUser({ email, password, name }: { email: string; password: string; name: string }) {
 		const passwordHash = this.hashPassword(password);
 		const userId = this.generateId();
 
-		const [{ id, email: userEmail, name }] = await this.db
+		const [{ id, email: userEmail, name: userName }] = await this.db
 			.insert(this.schema)
-			.values({ id: userId, email, password: passwordHash })
+			.values({ id: userId, email, password: passwordHash, name })
 			.returning();
 
 		if (!id) error(500, 'User could not be created');
@@ -37,7 +37,7 @@ export class User extends TableCommon<typeof user> {
 		return {
 			id,
 			email: userEmail,
-			name
+			name: userName
 		};
 	}
 

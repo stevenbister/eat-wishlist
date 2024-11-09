@@ -3,6 +3,19 @@ import { User } from '$lib/server/db/User';
 import { pageNotFound } from '$lib/utils/pageNotFound';
 import type { RequestHandler } from './$types';
 
+const users = [
+	{
+		name: 'Steven',
+		email: 'steven@test.com',
+		password: 'moc5-p@ssWord'
+	},
+	{
+		name: 'Grace',
+		email: 'grace@test.com',
+		password: 'moc5-p@ssWord'
+	}
+];
+
 export const GET: RequestHandler = async ({ platform, locals }) => {
 	if (platform?.env.ENVIRONMENT === 'production') pageNotFound();
 	const { db } = locals;
@@ -21,7 +34,9 @@ export const GET: RequestHandler = async ({ platform, locals }) => {
 
 	console.log('Creating test users...');
 
-	await user.createUser('test@test.com', 'moc5-p@ssWord');
+	for (const { name, email, password } of users) {
+		await user.createUser({ email, password, name });
+	}
 
 	console.log('Test users created');
 

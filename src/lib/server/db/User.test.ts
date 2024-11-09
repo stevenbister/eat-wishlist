@@ -13,7 +13,8 @@ const mockDbClient = vi.mocked(drizzle) as unknown as DbClient;
 
 const mockUser: MockUser = {
 	id: 'mock-user-id',
-	email: 'mock-user-email@test.com'
+	email: 'mock-user-email@test.com',
+	name: 'mock-user-name'
 };
 const mockPassword = 'moc5-p@ssWord';
 
@@ -71,7 +72,11 @@ describe('User', () => {
 				})
 			});
 
-			const result = await user.createUser(mockUser.email!, mockPassword);
+			const result = await user.createUser({
+				email: mockUser.email!,
+				password: mockPassword,
+				name: mockUser.name!
+			});
 			expect(result).toEqual(mockUser);
 		});
 	});
