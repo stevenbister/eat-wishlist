@@ -8,6 +8,7 @@ export type Establishment = typeof establishment.$inferSelect;
 export const establishment = sqliteTable('establishment', {
 	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
 	name: text('name').notNull(),
+	website: text('website'),
 	notes: text('notes'),
 	visited: integer('visited', { mode: 'boolean' }).notNull().default(false),
 	listId: integer('list_id')
