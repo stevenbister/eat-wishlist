@@ -1,5 +1,5 @@
-import { Session } from '$lib/server/db/objects/Session';
-import { User } from '$lib/server/db/objects/User';
+import { Session } from '$lib/server/db/Session';
+import { User } from '$lib/server/db/User';
 import { pageNotFound } from '$lib/utils/pageNotFound';
 import type { RequestHandler } from './$types';
 

@@ -1,4 +1,4 @@
-import { Session } from '$lib/server/db/objects/Session';
+import { Session } from '$lib/server/db/Session';
 import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 

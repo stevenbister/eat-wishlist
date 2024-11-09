@@ -1,6 +1,6 @@
 import { VALIDATION_MESSAGE } from '$lib/constants/auth';
-import { Session } from '$lib/server/db/objects/Session';
-import { User } from '$lib/server/db/objects/User';
+import { Session } from '$lib/server/db/Session';
+import { User } from '$lib/server/db/User';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 
 export const actions: Actions = {

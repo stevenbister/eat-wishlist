@@ -1,6 +1,6 @@
 import { SESSION_COOKIE_NAME } from '$lib/constants/auth';
 import { Database } from '$lib/server/db/connection';
-import { Session } from '$lib/server/db/objects/Session';
+import { Session } from '$lib/server/db/Session';
 import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
