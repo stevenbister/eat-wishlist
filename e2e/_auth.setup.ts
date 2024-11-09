@@ -15,7 +15,7 @@ setup('db', async ({ page }) => {
 setup('login', async ({ page }) => {
 	await page.goto('/login');
 
-	await page.getByLabel('Email').fill('test@test.com');
+	await page.getByLabel('Email').fill('steven@test.com');
 	await page.getByLabel('Password').fill('moc5-p@ssWord');
 	await page.getByRole('button', { name: 'Login' }).click();
 
