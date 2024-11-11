@@ -6,7 +6,7 @@
 </script>
 
 <ul>
-	{#each data.results as establishment}
+	{#each data.establishmentList as establishment}
 		<li>
 			<EstablishmentCard {...establishment} />
 		</li>

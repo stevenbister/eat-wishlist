@@ -16,6 +16,11 @@ const users = [
 		name: 'Grace',
 		email: 'grace@test.com',
 		password: 'moc5-p@ssWord'
+	},
+	{
+		name: 'Test',
+		email: 'test@test.com',
+		password: 'moc5-p@ssWord'
 	}
 ];
 
@@ -59,10 +64,18 @@ export const GET: RequestHandler = async ({ platform, locals }) => {
 
 	console.log('Creating lists...');
 
-	const [newList] = await list.add([
+	const newLists = await list.add([
 		{
 			name: 'Default',
 			createdBy: userList[0].id
+		},
+		{
+			name: 'Default',
+			createdBy: userList[1].id
+		},
+		{
+			name: 'Default',
+			createdBy: userList[2].id
 		}
 	]);
 
@@ -77,14 +90,28 @@ export const GET: RequestHandler = async ({ platform, locals }) => {
 			website: 'https://www.burgerking.com',
 			visited: true,
 			createdBy: userList[0].id,
-			listId: newList.id
+			listId: newLists[0].id
 		},
 		{
 			name: 'McDonalds',
 			notes: 'Burgers are delicious',
 			website: 'https://www.mcdonalds.com',
 			createdBy: userList[0].id,
-			listId: newList.id
+			listId: newLists[0].id
+		},
+		{
+			name: 'KFC',
+			notes: 'Burgers are delicious',
+			website: 'https://www.kfc.com',
+			createdBy: userList[1].id,
+			listId: newLists[1].id
+		},
+		{
+			name: 'Taco Bell',
+			notes: 'Burgers are delicious',
+			website: 'https://www.tacobell.com',
+			createdBy: userList[2].id,
+			listId: newLists[2].id
 		}
 	]);
 
