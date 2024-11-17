@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import Time from '$lib/components/Time.svelte';
 	import Dialog from './Dialog.svelte';
 	import Checkbox from './FormElements/Checkbox.svelte';
@@ -14,9 +15,11 @@
 			id: string;
 			name: string | null;
 		};
+		userId: string;
 	}
 
-	let { name, visited, website, createdAt, createdBy }: Props = $props();
+	let { id, name, visited, website, createdAt, createdBy, userId }: Props = $props();
+	let dialog: HTMLDialogElement | undefined = $state();
 </script>
 
 <article>
@@ -29,7 +32,7 @@
 	{/if}
 
 	<Dialog triggerText="Edit">
-		<form method="post">
+		<form method="POST">
 			<Input label="Name" name="name" value={name} />
 			<Input label="Website" name="website" value={website} />
 
@@ -41,9 +44,19 @@
 
 	<address>Added by {createdBy.name}</address>
 
-	<Dialog triggerText="Delete">
-		<form method="post">
-			<button>Delete</button>
-		</form>
-	</Dialog>
+	<!-- TODO: move this into own component probs -->
+	{#if userId === createdBy.id}
+		<Dialog triggerText="Delete" bind:dialog>
+			<form
+				method="POST"
+				action="/establishment/delete"
+				use:enhance
+				onsubmit={() => dialog?.close()}
+			>
+				<input type="hidden" name="createdBy" value={createdBy.id} />
+				<button name="id" value={id}>Delete</button>
+				<button onclick={() => dialog?.close()}>Cancel</button>
+			</form>
+		</Dialog>
+	{/if}
 </article>

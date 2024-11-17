@@ -18,6 +18,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	);
 
 	return {
-		establishmentList
+		establishmentList,
+		user
 	};
 };
