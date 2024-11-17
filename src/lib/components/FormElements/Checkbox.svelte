@@ -1,8 +1,9 @@
 <script lang="ts">
-	interface Props {
+	import type { HTMLInputAttributes } from 'svelte/elements';
+
+	interface Props extends HTMLInputAttributes {
 		label: string;
 		name: string;
-		checked?: boolean;
 	}
 
 	let { checked, label, name }: Props = $props();
