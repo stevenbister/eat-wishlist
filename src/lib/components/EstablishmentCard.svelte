@@ -17,10 +17,6 @@
 	}
 
 	let { name, visited, website, createdAt, createdBy }: Props = $props();
-
-	// TODO: Add
-	// TODO: Remove
-	// TODO: Add image / placeholder
 </script>
 
 <article>
@@ -44,4 +40,10 @@
 	<Time dateTime={createdAt} />
 
 	<address>Added by {createdBy.name}</address>
+
+	<Dialog triggerText="Delete">
+		<form method="post">
+			<button>Delete</button>
+		</form>
+	</Dialog>
 </article>
