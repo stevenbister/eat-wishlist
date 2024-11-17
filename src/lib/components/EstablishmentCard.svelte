@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Time from '$lib/components/Time.svelte';
-	import Checkbox from './Checkbox.svelte';
+	import Dialog from './Dialog.svelte';
+	import Checkbox from './FormElements/Checkbox.svelte';
+	import Input from './FormElements/Input.svelte';
 
 	interface Props {
 		id: number;
@@ -18,7 +20,6 @@
 
 	// TODO: Add
 	// TODO: Remove
-	// TODO: Edit (name/website)
 	// TODO: Add image / placeholder
 </script>
 
@@ -30,6 +31,15 @@
 	{#if website}
 		<a href={website} target="_blank">Website</a>
 	{/if}
+
+	<Dialog triggerText="Edit">
+		<form method="post">
+			<Input label="Name" name="name" value={name} />
+			<Input label="Website" name="website" value={website} />
+
+			<button>Save</button>
+		</form>
+	</Dialog>
 
 	<Time dateTime={createdAt} />
 
