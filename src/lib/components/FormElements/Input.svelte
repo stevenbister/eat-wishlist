@@ -5,11 +5,11 @@
 		label: string;
 	}
 
-	let { name, label, value }: Props = $props();
+	let { name, label, value, ...rest }: Props = $props();
 </script>
 
 <label>
 	{label}
 
-	<input type="text" {name} {value} />
+	<input type="text" {name} {value} {...rest} />
 </label>
