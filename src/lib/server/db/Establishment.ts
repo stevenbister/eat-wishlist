@@ -1,11 +1,14 @@
 import { and, eq, or } from 'drizzle-orm';
 import type { DbClient } from './connection';
+import { List } from './List';
 import { establishment } from './schema/establishment';
 import { user } from './schema/user';
 import { userFriend } from './schema/userFriend';
 import { TableCommon } from './TableCommon';
 
 export class Establishment extends TableCommon<typeof establishment> {
+	private list = new List(this.db);
+
 	constructor(db: DbClient) {
 		super(db, establishment);
 	}
@@ -52,5 +55,26 @@ export class Establishment extends TableCommon<typeof establishment> {
 			.from(this.schema)
 			.innerJoin(user, eq(this.schema.createdBy, user.id))
 			.innerJoin(userFriend, this.filterByFriends(currentUserId));
+	}
+
+	async addNew({
+		name,
+		website,
+		currentUserId
+	}: {
+		name: string;
+		currentUserId: string;
+		website: string | null;
+	}) {
+		const [{ id }] = await this.list.getDefault(currentUserId);
+
+		return await this.add([
+			{
+				name,
+				website,
+				createdBy: currentUserId,
+				listId: id
+			}
+		]);
 	}
 }
