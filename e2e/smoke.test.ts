@@ -1,11 +1,11 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('logged in', () => {
-	test('home page has username in heading when logged in', async ({ page }) => {
+	test('page has logout button in the header when logged in', async ({ page }) => {
 		await page.goto('/');
 		await expect(
-			page.getByRole('heading', {
-				name: 'Welcome steven@test.com, to SvelteKit'
+			page.getByRole('button', {
+				name: 'Logout'
 			})
 		).toBeVisible();
 	});
@@ -15,12 +15,10 @@ test.describe('logged out', () => {
 	// Reset storage state for this file to avoid being authenticated
 	test.use({ storageState: { cookies: [], origins: [] } });
 
-	test('home page has default heading when not logged in', async ({ page }) => {
+	test('redirects to the login page when not logged in', async ({ page }) => {
 		await page.goto('/');
-		await expect(
-			page.getByRole('heading', {
-				name: 'Welcome guest, to SvelteKit'
-			})
-		).toBeVisible();
+
+		expect(page.url()).toContain('/login');
+		await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
 	});
 });
